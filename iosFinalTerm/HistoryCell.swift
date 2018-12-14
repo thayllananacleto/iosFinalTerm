@@ -8,15 +8,11 @@
 
 import UIKit
 
-protocol ChangeCalcStatus {
-    func changeCalcStatus(checked: Bool, index: Int)
-}
-
 class HistoryCell: UITableViewCell {
     
     @IBOutlet weak var lblOutlet: UILabel!
     
-    var delegate: ChangeCalcStatus?
+    //var delegate: ChangeCalcStatus?
     var index: Int?
     var history: [History]?
     

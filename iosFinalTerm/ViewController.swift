@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewCalc, ChangeCalcStatus {
+class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, NewCalc {
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -26,15 +26,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     // Manipulate rows
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "historyCell", for: indexPath) as! HistoryCell
-        cell.lblOutlet.text = history[indexPath.row].calcName
+        cell.lblOutlet.text = history[indexPath.row].histDate + " - " + String(history[indexPath.row].histWeight) + " - " + String(history[indexPath.row].histBMI)
         
-        if history[indexPath.row].calcStatus {
-            //cell.chkOutlet.setBackgroundImage(#imageLiteral(resourceName: "checked-checkbox"), for: UIControl.State.normal)
-        } else {
-            //cell.chkOutlet.setBackgroundImage(#imageLiteral(resourceName: "unchecked-checkbox"), for: UIControl.State.normal)
-        }
-        
-        cell.delegate = self
+        //cell.delegate = self
         cell.index = indexPath.row
         cell.history = history
         
@@ -46,13 +40,8 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         viewController.delegate = self
     }
     
-    func newCalc(calcName: String) {
-        history.append(History(calcName: calcName))
-        tableView.reloadData()
-    }
-    
-    func changeCalcStatus(checked: Bool, index: Int) {
-        history[index].calcStatus = checked
+    func newCalc(histDate: String, histWeight: Double, histBMI: String) {
+        history.append(History(histDate: histDate, histWeight: histWeight, histBMI: histBMI))
         tableView.reloadData()
     }
     
@@ -68,11 +57,14 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
 }
 
 class History {
-    var calcName = ""
-    var calcStatus = false
+    var histDate = ""
+    var histWeight = 0.0
+    var histBMI = ""
     
-    convenience init(calcName: String) {
+    convenience init(histDate: String, histWeight: Double, histBMI: String) {
         self.init()
-        self.calcName = calcName
+        self.histDate = histDate
+        self.histWeight = histWeight
+        self.histBMI = histBMI
     }
 }
